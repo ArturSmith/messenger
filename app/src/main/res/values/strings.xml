@@ -7,4 +7,8 @@
     <string name="email_hint_text">Email</string>
     <string name="password_hint_text">Password</string>
     <string name="enter_email_and_password">Enter email and password</string>
+    <string name="name">Name</string>
+    <string name="last_name">Last name</string>
+    <string name="confirm_password_hint_text">Confirm password</string>
+    <string name="enter_all_fields">Enter all fields</string>
 </resources>

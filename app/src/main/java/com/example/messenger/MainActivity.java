@@ -3,6 +3,8 @@ package com.example.messenger;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        startRegisterActivityIntent(MainActivity.this);
+
+    }
+
+    private void startRegisterActivityIntent(Context context){
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = RegisterActivity.newIntent(context);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initViews() {
