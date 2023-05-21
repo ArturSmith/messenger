@@ -64,4 +64,8 @@ public class MainActivity extends AppCompatActivity {
         registerButton = findViewById(R.id.textViewRegister);
         errorText = findViewById(R.id.errorText);
     }
+
+    public static Intent newIntent(Context context){
+        return new Intent(context, MainActivity.class);
+    }
 }
