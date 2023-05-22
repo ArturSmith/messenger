@@ -1,6 +1,7 @@
 package com.example.messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -14,7 +15,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
-    private TextView loginButton;
+    private AppCompatButton loginButton;
     private TextView forgotPasswordButton;
     private TextView registerButton;
     private TextView errorText;
@@ -61,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = RegisterActivity.newIntent(context);
+                Intent intent = RegistrationActivity.newIntent(context);
                 startActivity(intent);
             }
         });

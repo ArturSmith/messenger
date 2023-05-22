@@ -1,19 +1,17 @@
 package com.example.messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity {
 
     private EditText name;
     private EditText lastName;
@@ -21,23 +19,23 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText password;
     private EditText confirmedPassword;
     private TextView errorText1;
-    private TextView buttonRegister;
+    private AppCompatButton buttonRegister;
     private RegisterViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_registration);
         viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
         initViews();
 
-        signup(RegisterActivity.this);
+        signup(RegistrationActivity.this);
 
         viewModel.isRegistered.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isRegistered) {
                 if (isRegistered) {
-                    Intent intent = MainActivity.newIntent(RegisterActivity.this);
+                    Intent intent = MainActivity.newIntent(RegistrationActivity.this);
                     startActivity(intent);
                 }
             }
@@ -80,6 +78,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public static Intent newIntent(Context context) {
-        return new Intent(context, RegisterActivity.class);
+        return new Intent(context, RegistrationActivity.class);
     }
 }
