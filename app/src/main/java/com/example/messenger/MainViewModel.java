@@ -19,6 +19,8 @@ public class MainViewModel extends AndroidViewModel {
     private FirebaseAuth auth;
     private FirebaseUser user;
 
+    public MutableLiveData<Boolean> authorized = new MutableLiveData<>();
+
     public MainViewModel(@NonNull Application application) {
         super(application);
         auth = FirebaseAuth.getInstance();
@@ -31,12 +33,14 @@ public class MainViewModel extends AndroidViewModel {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         Toast.makeText(context, "Authorized", Toast.LENGTH_SHORT).show();
+                        authorized.setValue(true);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show();
+                        authorized.setValue(false);
                     }
                 });
     }
