@@ -7,8 +7,13 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -30,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         login();
         startRegisterActivity(MainActivity.this);
         startForgorPasswordActivity(MainActivity.this);
+        setSystemBarColor();
 
         viewModel.authorized.observe(this, new Observer<Boolean>() {
             @Override
@@ -40,6 +46,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void setSystemBarColor(){
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(Color.GRAY);
     }
 
     private void login() {
@@ -90,4 +102,6 @@ public class MainActivity extends AppCompatActivity {
     public static Intent newIntent(Context context) {
         return new Intent(context, MainActivity.class);
     }
+
+
 }

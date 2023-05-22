@@ -7,8 +7,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
@@ -20,10 +23,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
+        setSystemBarColor();
         viewModel = new ViewModelProvider(this).get(ForgotPasswordViewModel.class);
         initViews();
         startMainActivity(ForgotPasswordActivity.this);
         resetPassword();
+    }
+    private void setSystemBarColor(){
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(Color.GRAY);
     }
 
     private void resetPassword() {

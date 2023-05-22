@@ -120,7 +120,6 @@
             android:text="@string/register"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/errorTextRA" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

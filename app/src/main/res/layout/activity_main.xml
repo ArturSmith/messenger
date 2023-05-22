@@ -83,7 +83,6 @@
             android:text="@string/login_button_text"
             android:textColor="@color/black"
             android:textSize="15sp"
-            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@+id/editTextPassword"
             app:layout_constraintHorizontal_bias="0.484"
             app:layout_constraintStart_toStartOf="@+id/editTextPassword"

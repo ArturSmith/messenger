@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -30,6 +33,7 @@ public class RegistrationActivity extends AppCompatActivity {
         initViews();
 
         signup(RegistrationActivity.this);
+        setSystemBarColor();
 
         viewModel.isRegistered.observe(this, new Observer<Boolean>() {
             @Override
@@ -40,6 +44,11 @@ public class RegistrationActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    private void setSystemBarColor(){
+        Window window = getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(Color.GRAY);
     }
 
     private void signup(Context context) {
