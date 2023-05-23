@@ -18,12 +18,14 @@ import android.widget.Toolbar;
 
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class HomeActivity extends AppCompatActivity {
 
 
     private HomeViewModel viewModel;
     private MaterialToolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,11 +33,15 @@ public class HomeActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        viewModelObserve();
         setSystemBarColor();
-        viewModel.loggedOut.observe(this, new Observer<Boolean>() {
+    }
+
+    private void viewModelObserve() {
+        viewModel.getUser().observe(this, new Observer<FirebaseUser>() {
             @Override
-            public void onChanged(Boolean loggedOut) {
-                if (loggedOut) {
+            public void onChanged(FirebaseUser firebaseUser) {
+                if (firebaseUser == null) {
                     Intent intent = MainActivity.newIntent(HomeActivity.this);
                     startActivity(intent);
                 }
@@ -43,15 +49,16 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void setSystemBarColor(){
+    private void setSystemBarColor() {
         Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.GRAY);
     }
 
-    public static Intent newIntent(Context context){
+    public static Intent newIntent(Context context) {
         return new Intent(context, HomeActivity.class);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
@@ -60,7 +67,7 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId()==R.id.logoutMenuItem) {
+        if (item.getItemId() == R.id.logoutMenuItem) {
             viewModel.logout();
         }
         return super.onOptionsItemSelected(item);

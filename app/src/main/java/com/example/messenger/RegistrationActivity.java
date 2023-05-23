@@ -13,6 +13,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RegistrationActivity extends AppCompatActivity {
 
@@ -23,41 +24,60 @@ public class RegistrationActivity extends AppCompatActivity {
     private EditText confirmedPassword;
     private TextView errorText1;
     private AppCompatButton buttonRegister;
-    private RegisterViewModel viewModel;
+    private RegistrationViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        viewModel = new ViewModelProvider(this).get(RegisterViewModel.class);
+        viewModel = new ViewModelProvider(this).get(RegistrationViewModel.class);
         initViews();
-
-        signup(RegistrationActivity.this);
+        signup();
+        viewModelObserve();
         setSystemBarColor();
+    }
 
-        viewModel.isRegistered.observe(this, new Observer<Boolean>() {
+    private void viewModelObserve() {
+        viewModel.getIsRegistered().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean isRegistered) {
                 if (isRegistered) {
+                    Toast.makeText(
+                            RegistrationActivity.this,
+                            "User created",
+                            Toast.LENGTH_SHORT).show();
                     Intent intent = MainActivity.newIntent(RegistrationActivity.this);
                     startActivity(intent);
                 }
             }
         });
+
+        viewModel.getError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                if (error != null) {
+                    Toast.makeText(
+                            RegistrationActivity.this,
+                            error,
+                            Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
-    private void setSystemBarColor(){
+
+    private void setSystemBarColor() {
         Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.GRAY);
     }
 
-    private void signup(Context context) {
+    private void signup() {
         buttonRegister.setOnClickListener(view -> {
-            String nameText = name.getText().toString().trim();
-            String lastNameText = lastName.getText().toString().trim();
-            String emailText = email.getText().toString().trim();
-            String passwordText = password.getText().toString().trim();
-            String confirmedPasswordText = confirmedPassword.getText().toString().trim();
+            String nameText = getTrimmedString(name);
+            String lastNameText = getTrimmedString(lastName);
+            String emailText = getTrimmedString(email);
+            String passwordText = getTrimmedString(password);
+            String confirmedPasswordText = getTrimmedString(confirmedPassword);
             if (nameText.isEmpty() ||
                     lastNameText.isEmpty() ||
                     emailText.isEmpty() ||
@@ -69,10 +89,14 @@ public class RegistrationActivity extends AppCompatActivity {
                     errorText1.setText("Confirm password");
                 } else {
                     errorText1.setText("");
-                    viewModel.signupWithEmailAndPassword(emailText, passwordText, context);
+                    viewModel.signupWithEmailAndPassword(emailText, passwordText);
                 }
             }
         });
+    }
+
+    private String getTrimmedString(EditText text) {
+        return text.getText().toString().trim();
     }
 
     private void initViews() {

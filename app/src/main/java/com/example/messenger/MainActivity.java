@@ -8,14 +8,15 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
     private EditText email;
@@ -33,22 +34,34 @@ public class MainActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         initViews();
         login();
-        startRegisterActivity(MainActivity.this);
-        startForgorPasswordActivity(MainActivity.this);
+        viewModelObserve();
+        startRegistrationActivity(MainActivity.this);
+        startForgotPasswordActivity(MainActivity.this);
         setSystemBarColor();
+    }
 
-        viewModel.authorized.observe(this, new Observer<Boolean>() {
+    private void viewModelObserve() {
+        viewModel.getUser().observe(this, new Observer<FirebaseUser>() {
             @Override
-            public void onChanged(Boolean authorized) {
-                if (authorized) {
+            public void onChanged(FirebaseUser firebaseUser) {
+                if (firebaseUser != null) {
                     Intent intent = HomeActivity.newIntent(MainActivity.this);
                     startActivity(intent);
                 }
             }
         });
+
+        viewModel.getError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                if (error != null) {
+                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
-    private void setSystemBarColor(){
+    private void setSystemBarColor() {
         Window window = getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(Color.GRAY);
@@ -64,13 +77,13 @@ public class MainActivity extends AppCompatActivity {
                     errorText.setVisibility(View.VISIBLE);
                 } else {
                     errorText.setVisibility(View.GONE);
-                    viewModel.login(emailText, passwordText, MainActivity.this);
+                    viewModel.login(emailText, passwordText);
                 }
             }
         });
     }
 
-    private void startRegisterActivity(Context context) {
+    private void startRegistrationActivity(Context context) {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void startForgorPasswordActivity(Context context) {
+    private void startForgotPasswordActivity(Context context) {
         forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

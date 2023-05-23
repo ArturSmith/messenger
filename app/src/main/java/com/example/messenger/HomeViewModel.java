@@ -5,20 +5,31 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-public class HomeViewModel extends AndroidViewModel {
+public class HomeViewModel extends ViewModel {
 
     private FirebaseAuth auth;
-    public MutableLiveData<Boolean> loggedOut = new MutableLiveData<>();
-    public HomeViewModel(@NonNull Application application) {
-        super(application);
+    private MutableLiveData<FirebaseUser> user = new MutableLiveData<>();
+
+    public MutableLiveData<FirebaseUser> getUser() {
+        return user;
+    }
+
+    public HomeViewModel() {
         auth = FirebaseAuth.getInstance();
+        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                    user.setValue(firebaseAuth.getCurrentUser());
+            }
+        });
     }
 
     public void logout(){
         auth.signOut();
-        loggedOut.setValue(true);
     }
 }
