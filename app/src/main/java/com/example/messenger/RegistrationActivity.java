@@ -15,6 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseUser;
+
 public class RegistrationActivity extends AppCompatActivity {
 
     private EditText name;
@@ -38,16 +40,13 @@ public class RegistrationActivity extends AppCompatActivity {
     }
 
     private void viewModelObserve() {
-        viewModel.getIsRegistered().observe(this, new Observer<Boolean>() {
+        viewModel.getUser().observe(this, new Observer<FirebaseUser>() {
             @Override
-            public void onChanged(Boolean isRegistered) {
-                if (isRegistered) {
-                    Toast.makeText(
-                            RegistrationActivity.this,
-                            "User created",
-                            Toast.LENGTH_SHORT).show();
+            public void onChanged(FirebaseUser firebaseUser) {
+                if (firebaseUser != null) {
                     Intent intent = MainActivity.newIntent(RegistrationActivity.this);
                     startActivity(intent);
+                    finish();
                 }
             }
         });

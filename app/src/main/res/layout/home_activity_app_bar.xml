@@ -12,6 +12,7 @@
         app:title="Home"
         app:titleCentered="true"
         app:titleTextColor="#FFFFFF"
-        app:menu="@menu/main_menu"/>
+        app:menu="@menu/main_menu"
+        android:elevation="20dp"/>
 
 </com.google.android.material.appbar.AppBarLayout>

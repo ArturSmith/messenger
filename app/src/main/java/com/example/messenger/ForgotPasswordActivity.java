@@ -26,9 +26,9 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-        setSystemBarColor();
         viewModel = new ViewModelProvider(this).get(ForgotPasswordViewModel.class);
         initViews();
+        setSystemBarColor();
         viewModelObserve(ForgotPasswordActivity.this);
         resetPassword();
     }

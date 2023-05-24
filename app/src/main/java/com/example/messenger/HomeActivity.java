@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.content.Intent;
@@ -25,16 +26,21 @@ public class HomeActivity extends AppCompatActivity {
 
     private HomeViewModel viewModel;
     private MaterialToolbar toolbar;
+    private RecyclerView recyclerViewUsers;
+    private UsersAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        initViews();
         viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         viewModelObserve();
         setSystemBarColor();
+
+
     }
 
     private void viewModelObserve() {
@@ -71,5 +77,11 @@ public class HomeActivity extends AppCompatActivity {
             viewModel.logout();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initViews(){
+        recyclerViewUsers = findViewById(R.id.recyclerViewHA);
+        adapter = new UsersAdapter();
+        recyclerViewUsers.setAdapter(adapter);
     }
 }

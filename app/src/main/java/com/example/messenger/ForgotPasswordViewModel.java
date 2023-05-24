@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -18,11 +19,11 @@ public class ForgotPasswordViewModel extends ViewModel {
     private FirebaseAuth auth;
     private MutableLiveData<Boolean> success = new MutableLiveData<>();
     private MutableLiveData<String> error = new MutableLiveData<>();
-    public MutableLiveData<Boolean> getSuccess() {
+    public LiveData<Boolean> getSuccess() {
         return success;
     }
 
-    public MutableLiveData<String> getError() {
+    public LiveData<String> getError() {
         return error;
     }
 
