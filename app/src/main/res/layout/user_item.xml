@@ -4,8 +4,11 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/ripple_effect"
     app:cardUseCompatPadding="true"
-    android:elevation="10dp">
+    app:cardCornerRadius="5dp"
+    android:elevation="100dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"

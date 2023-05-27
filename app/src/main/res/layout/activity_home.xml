@@ -15,7 +15,7 @@
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:padding="8dp"
-        android:background="@color/background_home_activity"
+        android:background="@android:color/darker_gray"
         tools:listitem="@layout/user_item"
         />
 

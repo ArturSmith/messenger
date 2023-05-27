@@ -11,15 +11,25 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -39,8 +49,6 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         viewModelObserve();
         setSystemBarColor();
-
-
     }
 
     private void viewModelObserve() {
@@ -50,6 +58,16 @@ public class HomeActivity extends AppCompatActivity {
                 if (firebaseUser == null) {
                     Intent intent = MainActivity.newIntent(HomeActivity.this);
                     startActivity(intent);
+                    finish();
+                }
+            }
+        });
+
+        viewModel.getUsers().observe(this, new Observer<List<User>>() {
+            @Override
+            public void onChanged(List<User> users) {
+                if (users!=null) {
+                    adapter.setUsers(users);
                 }
             }
         });
@@ -79,7 +97,7 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void initViews(){
+    private void initViews() {
         recyclerViewUsers = findViewById(R.id.recyclerViewHA);
         adapter = new UsersAdapter();
         recyclerViewUsers.setAdapter(adapter);

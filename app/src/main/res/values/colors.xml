@@ -7,5 +7,5 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="background_home_activity">#80550000</color>
+    <color name="background_home_activity">#111111</color>
 </resources>

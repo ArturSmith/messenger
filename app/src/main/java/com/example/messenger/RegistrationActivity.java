@@ -88,7 +88,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     errorText1.setText("Confirm password");
                 } else {
                     errorText1.setText("");
-                    viewModel.signupWithEmailAndPassword(emailText, passwordText);
+                    viewModel.signupWithEmailAndPassword(emailText, passwordText, nameText, lastNameText);
                 }
             }
         });

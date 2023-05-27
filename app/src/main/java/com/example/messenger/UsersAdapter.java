@@ -43,7 +43,7 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.UserViewHold
     @Override
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = users.get(position);
-        String userInfo = String.format("%s, %s", user.getName(), user.getLastName());
+        String userInfo = String.format("%s %s", user.getName(), user.getLastName());
         holder.textViewUserInfo.setText(userInfo);
         int bgResId;
         if (user.isOnline()) {

@@ -2,17 +2,19 @@
 <com.google.android.material.appbar.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/holo_orange_dark"
+        android:background="@android:color/white"
+        android:elevation="50dp"
+        app:menu="@menu/main_menu"
         app:title="Home"
         app:titleCentered="true"
-        app:titleTextColor="#FFFFFF"
-        app:menu="@menu/main_menu"
-        android:elevation="20dp"/>
+        app:titleTextColor="@color/black"
+        />
 
 </com.google.android.material.appbar.AppBarLayout>
