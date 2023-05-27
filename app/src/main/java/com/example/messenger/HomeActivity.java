@@ -33,11 +33,12 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-
+    private static final String EXTRA_CURRENT_USER_ID = "current_user";
     private HomeViewModel viewModel;
     private MaterialToolbar toolbar;
     private RecyclerView recyclerViewUsers;
     private UsersAdapter adapter;
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +50,18 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         viewModelObserve();
         setSystemBarColor();
+
+        currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
+        adapter.setOnUserClickListener(new UsersAdapter.OnUserClickListener() {
+            @Override
+            public void onUserClick(User user) {
+                Intent intent = ChatActivity.newIntent(
+                        HomeActivity.this,
+                        currentUserId,
+                        user.getId());
+                startActivity(intent);
+            }
+        });
     }
 
     private void viewModelObserve() {
@@ -66,7 +79,7 @@ public class HomeActivity extends AppCompatActivity {
         viewModel.getUsers().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(List<User> users) {
-                if (users!=null) {
+                if (users != null) {
                     adapter.setUsers(users);
                 }
             }
@@ -79,8 +92,10 @@ public class HomeActivity extends AppCompatActivity {
         window.setStatusBarColor(Color.GRAY);
     }
 
-    public static Intent newIntent(Context context) {
-        return new Intent(context, HomeActivity.class);
+    public static Intent newIntent(Context context, String currentUserId) {
+        Intent intent = new Intent(context, HomeActivity.class);
+        intent.putExtra(EXTRA_CURRENT_USER_ID, currentUserId);
+        return intent;
     }
 
     @Override

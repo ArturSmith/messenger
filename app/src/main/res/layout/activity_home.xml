@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeActivity"
-    android:orientation="vertical">
+    android:background="#10000099"
+    android:orientation="vertical"
+    tools:context=".HomeActivity">
 
     <include layout="@layout/home_activity_app_bar" />
 
@@ -13,12 +14,9 @@
         android:id="@+id/recyclerViewHA"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:padding="8dp"
-        android:background="@android:color/darker_gray"
-        tools:listitem="@layout/user_item"
-        />
-
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/user_item" />
 
 
 </LinearLayout>

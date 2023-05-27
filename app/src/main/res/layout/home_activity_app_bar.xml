@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@android:color/white"
+        android:background="@color/app_bar_white_color"
         android:elevation="50dp"
         app:menu="@menu/main_menu"
         app:title="Home"

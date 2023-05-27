@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/main_background_color"
     tools:context=".ChatActivity">
 
     <TextView
         android:id="@+id/textViewTitleChA"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#F4EEEE"
+        android:background="@color/app_bar_white_color"
         android:padding="16dp"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Arthur Smith" />
 
@@ -36,7 +39,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/editTextMessageChA"
         app:layout_constraintTop_toBottomOf="@id/textViewTitleChA"
-        tools:itemCount="10"
         tools:listitem="@layout/my_message_item" />
 
     <EditText
@@ -49,22 +51,19 @@
         android:paddingStart="16dp"
         android:paddingTop="16dp"
         android:paddingEnd="48dp"
-        android:elevation="10dp"
         android:paddingBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:autofillHints="" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <ImageView
         android:id="@+id/imageViewSendMessageChA"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginEnd="5dp"
-        android:contentDescription="@null"
-        android:src="@android:drawable/ic_menu_send"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:layout_constraintBottom_toBottomOf="@id/editTextMessageChA"
         app:layout_constraintEnd_toEndOf="@id/editTextMessageChA"
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewChA"
-        app:tint="@color/purple_500" />
+        app:layout_constraintTop_toTopOf="@id/editTextMessageChA"
+        app:srcCompat="@android:drawable/ic_menu_send"
+        app:tint="@color/black" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

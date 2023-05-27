@@ -8,5 +8,6 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="background_home_activity">#111111</color>
-    <color name="app_bar_color">FFE8E4E4</color>
+    <color name="app_bar_white_color">#F4EEEE</color>
+    <color name="main_background_color">#10000099</color>
 </resources>
