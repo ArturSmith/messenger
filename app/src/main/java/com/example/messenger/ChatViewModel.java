@@ -1,6 +1,7 @@
 package com.example.messenger;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -31,6 +32,10 @@ public class ChatViewModel extends ViewModel {
     public ChatViewModel(String currentUserId, String otherUserId) {
         this.currentUserId = currentUserId;
         this.otherUserId = otherUserId;
+        listeners();
+    }
+
+    private void listeners() {
 
         refUsers.child(otherUserId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -45,38 +50,45 @@ public class ChatViewModel extends ViewModel {
             }
         });
 
-        refMessages.child(currentUserId).child(otherUserId).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                List<Message> messagesList = new ArrayList<>();
-                for (DataSnapshot datasnapshot:
-                        snapshot.getChildren()) {
-                    Message message = datasnapshot.getValue(Message.class);
-                    messagesList.add(message);
-                }
-                messages.setValue(messagesList);
-            }
+        refMessages.child(currentUserId).child(otherUserId)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        List<Message> messagesList = new ArrayList<>();
+                        for (DataSnapshot datasnapshot :
+                                snapshot.getChildren()) {
+                            Message message = datasnapshot.getValue(Message.class);
+                            messagesList.add(message);
+                        }
+                        messages.setValue(messagesList);
+                    }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+                    }
+                });
+
+
     }
 
-    public MutableLiveData<List<Message>> getMessages() {
+    public void setUserOnline(Boolean isOnline) {
+        refUsers.child(currentUserId).child("online").setValue(isOnline);
+    }
+
+    public LiveData<List<Message>> getMessages() {
         return messages;
     }
 
-    public MutableLiveData<User> getOtherUser() {
+    public LiveData<User> getOtherUser() {
         return otherUser;
     }
 
-    public MutableLiveData<Boolean> getMessageSent() {
+    public LiveData<Boolean> getMessageSent() {
         return messageSent;
     }
 
-    public MutableLiveData<String> getError() {
+    public LiveData<String> getError() {
         return error;
     }
 

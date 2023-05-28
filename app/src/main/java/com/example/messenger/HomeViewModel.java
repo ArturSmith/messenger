@@ -48,6 +48,12 @@ public class HomeViewModel extends ViewModel {
         loadUsers();
     }
 
+
+    public void setUserOnline(Boolean isOnline) {
+        if (auth.getCurrentUser() == null) return;
+        databaseReference.child(auth.getCurrentUser().getUid()).child("online").setValue(isOnline);
+    }
+
     public void loadUsers() {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -58,7 +64,7 @@ public class HomeViewModel extends ViewModel {
                 for (DataSnapshot dataSnapshot :
                         snapshot.getChildren()) {
                     User user = dataSnapshot.getValue(User.class);
-                    if (user==null) return;
+                    if (user == null) return;
                     if (!user.getId().equals(currentUser.getUid())) {
                         usersFromDB.add(user);
                     }
@@ -74,6 +80,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void logout() {
+        setUserOnline(false);
         auth.signOut();
     }
 }
