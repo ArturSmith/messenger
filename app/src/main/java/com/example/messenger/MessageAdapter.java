@@ -50,7 +50,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
 
         Message message = messages.get(position);
-        holder.message.setText(message.getMessage());
+        holder.message.setText(message.getText());
     }
 
     @Override
@@ -61,7 +61,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MessageV
     @Override
     public int getItemViewType(int position) {
         Message message = messages.get(position);
-        if (message.getReceivedId().equals(currentUserId)) {
+        if (message.getSenderId().equals(currentUserId)) {
             return VIEW_TYPE_MY_MESSAGE;
         } else {
             return VIEW_TYPE_OTHER_MESSAGE;

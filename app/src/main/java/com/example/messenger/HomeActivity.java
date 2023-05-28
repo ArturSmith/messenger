@@ -18,8 +18,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -45,13 +47,11 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         initViews();
-        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         viewModelObserve();
         setSystemBarColor();
 
-        currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
+
         adapter.setOnUserClickListener(new UsersAdapter.OnUserClickListener() {
             @Override
             public void onUserClick(User user) {
@@ -63,6 +63,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
     }
+
 
     private void viewModelObserve() {
         viewModel.getUser().observe(this, new Observer<FirebaseUser>() {
@@ -113,8 +114,13 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
+        viewModel = new ViewModelProvider(this).get(HomeViewModel.class);
+        toolbar = findViewById(R.id.toolbar);
         recyclerViewUsers = findViewById(R.id.recyclerViewHA);
         adapter = new UsersAdapter();
         recyclerViewUsers.setAdapter(adapter);
     }
+
+
 }

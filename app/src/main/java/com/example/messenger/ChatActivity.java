@@ -1,6 +1,8 @@
 package com.example.messenger;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.List;
 public class ChatActivity extends AppCompatActivity {
     private static final String EXTRA_CURRENT_USER_ID = "current_user";
     private static final String EXTRA_OTHER_USER_ID = "other_user";
+
     private TextView title;
     private View onlineStatus;
     private RecyclerView recyclerView;
@@ -26,36 +30,62 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter adapter;
     private String currentUserId;
     private String otherUserID;
+    private ChatViewModel viewModel;
+    private ChatViewModelFactory chatViewModelFactory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
         initViews();
-        currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
-        otherUserID = getIntent().getStringExtra(EXTRA_OTHER_USER_ID);
-        adapter = new MessageAdapter(currentUserId);
+        observeViewModel();
 
-        List<Message> messages = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-         Message message = new Message(
-                 "Text" + i,
-                 currentUserId,
-                 otherUserID
-         );
-         messages.add(message);
-        }
+        sendMessageImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Message message = new Message(
+                        editTextMessage.getText().toString().trim(),
+                        currentUserId,
+                        otherUserID);
+                viewModel.sendMessage(message);
+            }
+        });
+    }
 
-        for (int i = 0; i < 10; i++) {
-            Message message = new Message(
-                    "Text" + i,
-                    otherUserID,
-                    currentUserId
-            );
-            messages.add(message);
-        }
-        adapter.setMessages(messages);
-        recyclerView.setAdapter(adapter);
+    private void observeViewModel() {
+        viewModel.getMessages().observe(this, new Observer<List<Message>>() {
+            @Override
+            public void onChanged(List<Message> messages) {
+                adapter.setMessages(messages);
+            }
+        });
+
+        viewModel.getError().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                if (error != null) {
+                    Toast.makeText(ChatActivity.this, error, Toast.LENGTH_SHORT);
+                }
+            }
+        });
+
+        viewModel.getMessageSent().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean sent) {
+                if (sent) {
+                    editTextMessage.setText("");
+                }
+            }
+        });
+
+        viewModel.getOtherUser().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                String userInfo = String.format("%s %s", user.getName(), user.getLastName());
+                title.setText(userInfo);
+            }
+        });
     }
 
     private void initViews() {
@@ -64,6 +94,13 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recyclerViewChA);
         editTextMessage = findViewById(R.id.editTextMessageChA);
         sendMessageImage = findViewById(R.id.imageViewSendMessageChA);
+        currentUserId = getIntent().getStringExtra(EXTRA_CURRENT_USER_ID);
+        otherUserID = getIntent().getStringExtra(EXTRA_OTHER_USER_ID);
+        chatViewModelFactory = new ChatViewModelFactory(currentUserId, otherUserID);
+        viewModel = new ViewModelProvider(this, chatViewModelFactory).get(ChatViewModel.class);
+
+        adapter = new MessageAdapter(currentUserId);
+        recyclerView.setAdapter(adapter);
     }
 
     public static Intent newIntent(Context context, String currentUserID, String otherUserID) {

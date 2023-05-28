@@ -1,23 +1,27 @@
 package com.example.messenger;
 
 public class Message {
-    private String message;
-    private String id;
+    private String text;
+    private String senderId;
     private String receivedId;
 
 
-    public Message(String message, String id, String receivedId) {
-        this.message = message;
-        this.id = id;
-        this.receivedId = receivedId;
+    public Message(String message, String senderId, String receiveID) {
+        this.text = message;
+        this.senderId = senderId;
+        this.receivedId = receiveID;
+
     }
 
-    public String getMessage() {
-        return message;
+    public Message() {
     }
 
-    public String getId() {
-        return id;
+    public String getText() {
+        return text;
+    }
+
+    public String getSenderId() {
+        return senderId;
     }
 
     public String getReceivedId() {
