@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.presentation;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -9,6 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.messenger.R;
+import com.example.messenger.domain.User;
 
 import java.util.ArrayList;
 import java.util.List;

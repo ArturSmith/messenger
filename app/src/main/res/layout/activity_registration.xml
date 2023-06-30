@@ -6,7 +6,7 @@
     android:gravity="center"
     android:fillViewport="true"
     android:orientation="vertical"
-    tools:context=".RegistrationActivity">
+    tools:context=".presentation.RegistrationActivity">
 
 
     <LinearLayout

@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.domain;
 
 public class User {
     private String id;

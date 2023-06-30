@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -16,27 +16,28 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.messenger.R;
 import com.google.firebase.auth.FirebaseUser;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private EditText email;
     private EditText password;
     private AppCompatButton loginButton;
     private TextView forgotPasswordButton;
     private TextView registerButton;
     private TextView errorText;
-    private MainViewModel viewModel;
+    private LoginViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
+        viewModel = new ViewModelProvider(this).get(LoginViewModel.class);
         initViews();
         login();
         viewModelObserve();
-        startRegistrationActivity(MainActivity.this);
-        startForgotPasswordActivity(MainActivity.this);
+        startRegistrationActivity(LoginActivity.this);
+        startForgotPasswordActivity(LoginActivity.this);
         setSystemBarColor();
     }
 
@@ -45,17 +46,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser != null) {
-                    Intent intent = HomeActivity.newIntent(MainActivity.this, firebaseUser.getUid());
+                    Intent intent = HomeActivity.newIntent(LoginActivity.this, firebaseUser.getUid());
                     startActivity(intent);
                 }
             }
         });
 
-        viewModel.getError().observe(this, new Observer<String>() {
+        viewModel.getErrorOfSignIn().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String error) {
                 if (error != null) {
-                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static Intent newIntent(Context context) {
-        return new Intent(context, MainActivity.class);
+        return new Intent(context, LoginActivity.class);
     }
 
 

@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.presentation;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,27 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.example.messenger.R;
+import com.example.messenger.domain.User;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -62,18 +52,51 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        Log.d("Life", "onCreate");
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        Log.d("Life", "onStart");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+
+        Log.d("Life", "onResume");
         viewModel.setUserOnline(true);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+
+        Log.d("Life", "onPause");
         viewModel.setUserOnline(false);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        Log.d("Life", "onStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+
+        Log.d("Life", "onRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        Log.d("Life", "onDestroy");
     }
 
     private void viewModelObserve() {
@@ -81,7 +104,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onChanged(FirebaseUser firebaseUser) {
                 if (firebaseUser == null) {
-                    Intent intent = MainActivity.newIntent(HomeActivity.this);
+                    Intent intent = LoginActivity.newIntent(HomeActivity.this);
                     startActivity(intent);
                     finish();
                 }

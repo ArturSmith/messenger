@@ -1,8 +1,10 @@
-package com.example.messenger;
+package com.example.messenger.presentation;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.messenger.presentation.ChatViewModel;
 
 public class ChatViewModelFactory implements ViewModelProvider.Factory {
     private String currentUserId;

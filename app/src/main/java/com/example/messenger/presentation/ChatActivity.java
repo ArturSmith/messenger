@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -16,7 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import com.example.messenger.domain.Message;
+import com.example.messenger.R;
+import com.example.messenger.domain.User;
+
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {

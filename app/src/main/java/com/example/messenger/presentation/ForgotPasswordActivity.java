@@ -1,4 +1,4 @@
-package com.example.messenger;
+package com.example.messenger.presentation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
@@ -15,6 +15,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.messenger.R;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
     private EditText email;
@@ -60,7 +62,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             public void onChanged(Boolean success) {
                 if (success) {
                     Toast.makeText(context, "Email is sent", Toast.LENGTH_SHORT).show();
-                    Intent intent = MainActivity.newIntent(context);
+                    Intent intent = LoginActivity.newIntent(context);
                     startActivity(intent);
                 }
             }

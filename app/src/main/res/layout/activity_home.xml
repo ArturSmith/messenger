@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#10000099"
     android:orientation="vertical"
-    tools:context=".HomeActivity">
+    tools:context=".presentation.HomeActivity">
 
     <include layout="@layout/home_activity_app_bar" />
 
